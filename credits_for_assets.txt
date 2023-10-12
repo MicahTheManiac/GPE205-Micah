@@ -1,0 +1,8 @@
+GPE205 "World of Tanks: The UAT Division"
+- Attributions -
+
+Tank Model:
+https://gisha.itch.io/tank-model
+
+Tree Models:
+https://devilsworkshop.itch.io/lowpoly-forest-pack

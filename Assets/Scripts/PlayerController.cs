@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerController : Controller
 {
     // Define Keys
@@ -9,10 +10,21 @@ public class PlayerController : Controller
     public KeyCode moveBackwardKey;
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
+    public KeyCode shootKey;
 
     // Start is called before the first frame update
     public override void Start()
     {
+        // If we have a GameManager
+        if (GameManager.instance != null)
+        {
+            // And it tracks the Players
+            if (GameManager.instance.players != null)
+            {
+                // Register with GameManager
+                GameManager.instance.players.Add(this);
+            }
+        }
         // Run Parent Start
         base.Start();
     }
@@ -48,6 +60,26 @@ public class PlayerController : Controller
         if (Input.GetKey(rotateCounterClockwiseKey))
         {
             pawn.RotateCounterClockwise();
+        }
+
+        if (Input.GetKey(shootKey))
+        {
+            pawn.Shoot();
+        }
+    }
+
+    // Run Destory Code
+    public void OnDestroy()
+    {
+        // If we have a GameManager
+        if (GameManager.instance != null)
+        {
+            // And it tracks the Players
+            if (GameManager.instance.players != null)
+            {
+                // Deregister with GameManager
+                GameManager.instance.players.Remove(this);
+            }
         }
     }
 }
