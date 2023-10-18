@@ -54,6 +54,20 @@ public class TankPawn : Pawn
         {
             Debug.Log("Shots Fired!");
             shootEventTime = Time.time + secondsPerShot;
+
+            // Shoot Projectile
+            shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
         }
+    }
+
+    // Rotate Towards Function -- Will Mainly be used for AI
+    public override void RotateTowards(Vector3 targetPosition)
+    {
+        // Get our Vector and Rotation
+        Vector3 vectorToTarget = targetPosition - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);
+
+        // Do Rotation
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 }

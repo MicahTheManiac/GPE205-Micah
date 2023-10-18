@@ -4,18 +4,24 @@ using UnityEngine;
 
 public abstract class Pawn : MonoBehaviour
 {
-    // Public Variables
+    // Movement Vars.
     public float moveSpeed;
     public float turnSpeed;
     public Mover mover;
 
-    public float fireRate = 2.0f;
+    // Shooting Vars.
     public float shotsPerSecond = 2.0f;
+    public Shooter shooter;
+    public GameObject shellPrefab;
+    public float fireForce;
+    public float damageDone;
+    public float shellLifespan;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         mover = GetComponent<Mover>();
+        shooter = GetComponent<Shooter>();
     }
 
     // Update is called once per frame
@@ -32,4 +38,7 @@ public abstract class Pawn : MonoBehaviour
 
     // Shoot Function
     public abstract void Shoot();
+
+    // Rotate Towards Function -- Will Mainly be used for AI
+    public abstract void RotateTowards(Vector3 targetPosition);
 }

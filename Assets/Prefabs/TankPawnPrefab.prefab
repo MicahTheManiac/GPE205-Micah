@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3802262408698766821}
   - component: {fileID: 2590034569363111654}
   - component: {fileID: 2996103676205187460}
+  - component: {fileID: 6239471624849804501}
+  - component: {fileID: 198735161709438665}
   m_Layer: 0
   m_Name: TankPawnPrefab
   m_TagString: Untagged
@@ -51,8 +53,12 @@ MonoBehaviour:
   moveSpeed: 5
   turnSpeed: 30
   mover: {fileID: 3802262408698766821}
-  fireRate: 2
   shotsPerSecond: 2
+  shooter: {fileID: 198735161709438665}
+  shellPrefab: {fileID: 5892221024069196190, guid: 1253efc270ed4034baca1995e8d9c002, type: 3}
+  fireForce: 1000
+  damageDone: 0
+  shellLifespan: 5
 --- !u!114 &3802262408698766821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +119,65 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.95, y: 2.9, z: 6.5}
   m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!114 &6239471624849804501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656025999714921868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b607d9a64aee544da93eecc75102b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 100
+  allowOverhealing: 0
+--- !u!114 &198735161709438665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656025999714921868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af1ab7bfc2c707d44b0b2891516e492f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firepointTransform: {fileID: 1247837685214784692}
+--- !u!1 &5011842499961114639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247837685214784692}
+  m_Layer: 0
+  m_Name: firepoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1247837685214784692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5011842499961114639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.45, z: 3.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 249951977106560950}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &356550192371773533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -167,7 +232,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 99c16644beada2446a670ff4f365fb55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1247837685214784692}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99c16644beada2446a670ff4f365fb55, type: 3}
 --- !u!4 &249951977106560950 stripped
