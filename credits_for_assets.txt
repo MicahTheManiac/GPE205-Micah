@@ -6,3 +6,6 @@ https://gisha.itch.io/tank-model
 
 Tree Models:
 https://devilsworkshop.itch.io/lowpoly-forest-pack
+
+Art Assets from Kenney (Includes UATank Model):
+http://www.kenney.nl :: License: CC0 1.0 Universal (https://creativecommons.org/publicdomain/zero/1.0/) 

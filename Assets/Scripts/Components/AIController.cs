@@ -37,6 +37,7 @@ public class AIController : Controller
     // Distance Vars.
     public float detectionRadius = 20.0f;
     public float fleeDistance;
+    public float hearingDistance;
 
     // Waypoints
     public Transform[] waypoints;
@@ -61,9 +62,54 @@ public class AIController : Controller
         }
     }
 
+    // Check to see if We have a Target
+    protected bool IsHasTarget()
+    {
+        // Return True if we Do, False if we Don't
+        return (target != null);
+    }
+
+    // Check to See if we can hear
+    public bool CanHear(GameObject target)
+    {
+        // Get the target's NoiseMaker
+        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+
+        // If they Don't have one Return False. They can't make noise
+        if (noiseMaker == null)
+        {
+            return false;
+        }
+
+        // If they are making 0 noise Return False
+        if (noiseMaker.volumeDistance <= 0)
+        {
+            return false;
+        }
+
+        // If they are making noise add the volumeDistance of the NoiseMaker to the hearingDistance in this AI
+        float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+
+        // If the distance between our Pawn and the Target is closer than totalDistance
+        if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
+        {
+            // Then Return True. We hear the target
+            return true;
+        }
+        else
+        {
+            // Otherwise Return False. We are too far away
+            return false;
+        }
+
+    }
+
     // Start is called before the first frame update
     public override void Start()
     {
+        // Check for Pawn
+        CheckForPawn();
+
         // Set Beginning State
         ChangeState(AIState.Idle);
 
@@ -74,6 +120,16 @@ public class AIController : Controller
     // Update is called once per frame
     public override void Update()
     {
+        // Check for Pawn
+        CheckForPawn();
+
+        // Check for Target
+        if (!IsHasTarget())
+        {
+            TargetNearestPlayer();
+        }
+
+        // Make AI Decisions
         MakeDecisions();
 
         // Run Parent Update
@@ -84,6 +140,100 @@ public class AIController : Controller
     public override void ProcessInputs()
     {
         
+    }
+
+    // Check to See if Pawn is null or not.
+    public void CheckForPawn()
+    {
+        if (pawn == null)
+        {
+            Debug.Log(gameObject.name + ": Self Destruct, I am missing my Pawn!");
+            Destroy(gameObject);
+            
+        }
+    }
+
+    // Auto Set Target to Player One
+    protected void TargetPlayerOne()
+    {
+        // If the GameManager exists
+        if (GameManager.instance != null)
+        {
+            // And the Player Array exists
+            if (GameManager.instance.players != null)
+            {
+                // And there are Players in it
+                if (GameManager.instance.players.Count > 0)
+                {
+                    // Then target the gameObject of the First Player Controller in the List
+                    target = GameManager.instance.players[0].pawn.gameObject;
+                }
+            }
+        }
+    }
+
+    // Target Nearest Tank
+    protected void TargetNearestTank()
+    {
+        // Get a list of all Tanks (Pawns)
+        Pawn[] allTanks = FindObjectsOfType<Pawn>();
+
+        // Assume the First Tank is Closest
+        Pawn closestTank = allTanks[0];
+        float closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
+
+        // Iterate through one at a time
+        foreach( Pawn tank in allTanks)
+        {
+            if (Vector3.Distance(pawn.transform.position, closestTank.transform.position) <= closestTankDistance)
+            {
+                // It is the Closest
+                closestTank = tank;
+                closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
+
+            }
+        }
+
+        // Target the Closest Tank
+        target = closestTank.gameObject;
+    }
+
+    // Target Nearest Player
+    protected void TargetNearestPlayer()
+    {
+        // If the GameManager exists
+        if (GameManager.instance != null)
+        {
+            // And the Player Array exists
+            if (GameManager.instance.players != null)
+            {
+                // And there are Players in it
+                if (GameManager.instance.players.Count > 0)
+                {
+                    // Get a List of all Players (PlayerControllers)
+                    PlayerController[] allPlayers = FindObjectsOfType<PlayerController>();
+
+                    // Assume the First Tank is Closest
+                    Pawn closestPlayer = allPlayers[0].pawn;
+                    float closestPlayerDistance = Vector3.Distance(pawn.transform.position, closestPlayer.transform.position);
+
+                    // Iterate through one at a time
+                    foreach (PlayerController player in allPlayers)
+                    {
+                        if (Vector3.Distance(pawn.transform.position, closestPlayer.transform.position) <= closestPlayerDistance)
+                        {
+                            // It is the Closest
+                            closestPlayer = player.pawn; // Suffix '.pawn' is added since closestPlayer is of Pawn type
+                            closestPlayerDistance = Vector3.Distance(pawn.transform.position, closestPlayer.transform.position);
+
+                        }
+                    }
+
+                    // Target the Closest PLayer
+                    target = closestPlayer.gameObject; // Suffix '.pawn.gameObject' is not needed since we already store the pawn
+                }
+            }
+        }
     }
 
     // Make Decisions

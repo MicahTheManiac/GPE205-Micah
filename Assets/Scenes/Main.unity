@@ -555,37 +555,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1238452228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3656025999714921868, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
-  m_PrefabInstance: {fileID: 1945447809}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1238452234 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8188391279040005415, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
   m_PrefabInstance: {fileID: 1945447809}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238452228}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6921395a83b997458455eaa3bbaecaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1238452236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238452228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b607d9a64aee544da93eecc75102b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 20
-  allowOverhealing: 0
 --- !u!1001 &1324278783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -876,6 +856,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI Tank
       objectReference: {fileID: 0}
+    - target: {fileID: 6239471624849804501, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7606904634644901319, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.59
@@ -927,10 +911,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3656025999714921868, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1238452236}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
 --- !u!1001 &2047011948
 PrefabInstance:

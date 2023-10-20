@@ -57,7 +57,7 @@ MonoBehaviour:
   shooter: {fileID: 198735161709438665}
   shellPrefab: {fileID: 5892221024069196190, guid: 1253efc270ed4034baca1995e8d9c002, type: 3}
   fireForce: 1000
-  damageDone: 0
+  damageDone: 10
   shellLifespan: 5
 --- !u!114 &3802262408698766821
 MonoBehaviour:
