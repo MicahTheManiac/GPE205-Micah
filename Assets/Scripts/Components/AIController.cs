@@ -4,48 +4,22 @@ using UnityEngine;
 
 public class AIController : Controller
 {
-    /*
-     * Personalities:
-     *  Aggressive
-     *  Cowardly
-     *  Heroic
-     *  Suicidal
-     *  Crazy
-     *  Dumb
-     *  ReallyDumb
-     *  
-     * States:
-     *  Seek
-     *  Shoot
-     *  MoveForward
-     *  MoveBackward
-     *  RotateClockwise
-     *  RotateCounterclockwise
-     *  
-     * Conditions:
-     *  CanHear
-     *  CanSee
-     *  IsHealthBelow
-     *  TimePassed
-     */
-
-    public enum AIState { Idle, Seek, Chase, Flee, Attack, Patrol };
+    public enum AIState { Idle, Chase, Flee, Attack, Patrol, Wander };
     public AIState currentState;
     public GameObject target;
     public bool doLooping = true;
+    public float lowHealthThreshold = 15.0f;
 
     // Distance Vars.
     public float detectionRadius = 20.0f;
     public float fleeDistance;
     public float hearingDistance;
+    public float fieldOfView;
 
     // Waypoints
     public Transform[] waypoints;
     public float waypointStopDistance;
     private int currentWaypoint = 0;
-
-    // public enum AIPersonality { Aggressive, Cowardly, Heroic, Suicidal, Crazy, Dumb, ReallyDumb };
-    // public AIPersonality personality;
 
     private float lastStateChangeTime;
 
@@ -104,6 +78,51 @@ public class AIController : Controller
 
     }
 
+    // Check to see if We can See
+    protected bool CanSee(GameObject target)
+    {
+        // Find the Vector from Agent (Us) to the Target
+        Vector3 agentToTargetVector = target.transform.position - pawn.transform.position;
+
+        // Find the Angle between Direction We are facing and the Vector to the Target
+        float angleToTarget = Vector3.Angle(agentToTargetVector, pawn.transform.forward);
+
+        // If that Angle is Less Than our Field of View
+        if (angleToTarget < fieldOfView)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    // Check our Health
+    public bool IsHealthBelowThreshold()
+    {
+        // Store our Health Component
+        Health health = pawn.GetComponent<Health>();
+
+        // Check to see if Component is Valid
+        if (health != null)
+        {
+            if (health.currentHealth < lowHealthThreshold)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -129,8 +148,8 @@ public class AIController : Controller
             TargetNearestPlayer();
         }
 
-        // Make AI Decisions
-        MakeDecisions();
+        // Make AI Decisions -- Should be Reserved for Personalitites
+        // MakeDecisions();
 
         // Run Parent Update
         base.Update();
@@ -244,27 +263,43 @@ public class AIController : Controller
             case AIState.Idle:
                 // Do Idle State
                 DoIdleState();
-                // Check for Transitions
+
+                // If Target is in Range
                 if (IsDistanceLessThan(target, detectionRadius))
                 {
-                    ChangeState(AIState.Chase);
+                    // And We See it
+                    if (CanSee(target))
+                    {
+                        ChangeState(AIState.Chase);
+                    }
                 }
                 break;
 
             case AIState.Chase:
                 // Do Chase State
                 DoChaseState();
-                // Check for Transitions
+
+                // If Target is out of Range
                 if (!IsDistanceLessThan(target, detectionRadius))
                 {
-                    ChangeState(AIState.Idle);
+                    // And We can't See it
+                    if (!CanSee(target))
+                    {
+                        ChangeState(AIState.Idle);
+                    }
+                }
+                // If We are Below Health Threshold
+                if (IsHealthBelowThreshold())
+                {
+                    ChangeState(AIState.Flee);
                 }
                 break;
 
             case AIState.Flee:
                 // Do Flee State
                 DoFleeState();
-                // Check for Transitions
+
+                // Check to see if We are far enough. Don't worry about Seeing Target
                 if (!IsDistanceLessThan(target, fleeDistance))
                 {
                     ChangeState(AIState.Idle);
@@ -274,10 +309,35 @@ public class AIController : Controller
             case AIState.Patrol:
                 // Do Patrol State
                 DoPatrolState();
-                // Check for Transitions
+
+                // If Target is in Range
                 if (IsDistanceLessThan(target, detectionRadius))
                 {
-                    ChangeState(AIState.Chase);
+                    // And We See it
+                    if (CanSee(target))
+                    {
+                        ChangeState(AIState.Chase);
+                    }
+                }
+                break;
+
+            case AIState.Attack:
+                // Do Attack State
+                DoAttackState();
+
+                // If Target is out of Range
+                if (!IsDistanceLessThan(target, detectionRadius))
+                {
+                    // And We can't See it
+                    if (!CanSee(target))
+                    {
+                        ChangeState(AIState.Idle);
+                    }
+                }
+                // If We are Below Health Threshold
+                if (IsHealthBelowThreshold())
+                {
+                    ChangeState(AIState.Flee);
                 }
                 break;
         }
