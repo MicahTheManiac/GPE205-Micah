@@ -45,11 +45,21 @@ public class PlayerController : Controller
         if (Input.GetKey(moveForwardKey))
         {
             pawn.MoveForward();
+            pawn.MakeNoise(true);
+        }
+        else
+        {
+            pawn.MakeNoise(false);
         }
 
         if (Input.GetKey(moveBackwardKey))
         {
             pawn.MoveBackward();
+            pawn.MakeNoise(true);
+        }
+        else
+        {
+            pawn.MakeNoise(false);
         }
 
         if (Input.GetKey(rotateClockwiseKey))

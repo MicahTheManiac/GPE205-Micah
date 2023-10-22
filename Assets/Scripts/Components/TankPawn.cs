@@ -29,6 +29,7 @@ public class TankPawn : Pawn
     public override void MoveForward()
     {
         mover.Move(transform.forward, moveSpeed);
+
     }
 
     public override void MoveBackward()
@@ -57,6 +58,14 @@ public class TankPawn : Pawn
 
             // Shoot Projectile
             shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
+
+            // Make Noise
+            MakeNoise(true);
+        }
+        else
+        {
+            // Don't Make Noise
+            MakeNoise(false);
         }
     }
 

@@ -67,8 +67,14 @@ public class AIController : Controller
         // If the distance between our Pawn and the Target is closer than totalDistance
         if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
         {
-            // Then Return True. We hear the target
-            return true;
+            // If they're making noise
+            if (noiseMaker.makingNoise == true)
+            {
+                // Then Return True. We hear the target
+                return true;
+            }
+
+            return false;
         }
         else
         {

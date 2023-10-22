@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
         Debug.Log(source.name + " did " + amount + " damage to " + gameObject.name);
 
         // Clamp the Health
-        // currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         Debug.Log(gameObject.name + ": My Health is " + currentHealth);
 
