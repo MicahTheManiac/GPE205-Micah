@@ -47,7 +47,7 @@ public class PlayerController : Controller
             pawn.MoveForward();
             pawn.MakeNoise(true);
         }
-        else
+        else if (!Input.GetKey(moveForwardKey))
         {
             pawn.MakeNoise(false);
         }
@@ -57,7 +57,7 @@ public class PlayerController : Controller
             pawn.MoveBackward();
             pawn.MakeNoise(true);
         }
-        else
+        else if (!Input.GetKey(moveBackwardKey))
         {
             pawn.MakeNoise(false);
         }
