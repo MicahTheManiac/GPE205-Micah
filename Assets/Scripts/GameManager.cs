@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     // List to hold out Players
     public List<PlayerController> players;
+    public List<AIController> enemies;
 
     // Called before Start() can run
     private void Awake()

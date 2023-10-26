@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Powerup
 {
+    public float duration = 1;
+    public bool isPermanent;
+
     public abstract void Apply(PowerupManager target);
     public abstract void Remove(PowerupManager target);
 }

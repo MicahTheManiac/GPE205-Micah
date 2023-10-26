@@ -135,6 +135,17 @@ public class AIController : Controller
         // Check for Pawn
         CheckForPawn();
 
+        // If we have a GameManager
+        if (GameManager.instance != null)
+        {
+            // And it tracks the Players
+            if (GameManager.instance.enemies != null)
+            {
+                // Register with GameManager
+                GameManager.instance.enemies.Add(this);
+            }
+        }
+
         // Set Beginning State
         ChangeState(AIState.Idle);
 

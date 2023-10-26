@@ -21,4 +21,9 @@ public class HealthPickup : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void Update()
+    {
+        transform.Rotate(0, 180 * Time.deltaTime, 0);
+    }
 }
