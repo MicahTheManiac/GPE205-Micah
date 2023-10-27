@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class DumbAIController : AIController
 {
-
-    public float wanderCountdownSeconds;
-    private float wanderCountdownTime;
-
     // Start is called before the first frame update
     public override void Start()
     {
@@ -46,6 +42,10 @@ public class DumbAIController : AIController
                 // If it is time to Wander
                 if (Time.time >= wanderCountdownTime)
                 {
+                    // Reset Timer
+                    wanderCountdownTime = Time.time + wanderCountdownSeconds;
+
+                    // Change State
                     ChangeState(AIState.Wander);
                 }
 
@@ -123,40 +123,4 @@ public class DumbAIController : AIController
                 break;
         }
     }
-
-    // Do Wander State
-    public void DoWanderState()
-    {
-        Wander();
-    }
-
-    // Wander Function
-    public void Wander()
-    {
-        // Get Target Distance
-        float targetDistance = Vector3.Distance(target.transform.position, pawn.transform.position);
-
-        // Make a "Random" Position Based on that
-        float percentOffWanderingDistance = targetDistance / ( (fleeDistance * detectionRadius) / lowHealthThreshold + 5);
-        float flippedPercentOffWanderingDistance = 1 - percentOffWanderingDistance;
-
-        percentOffWanderingDistance = Mathf.Clamp01(percentOffWanderingDistance * flippedPercentOffWanderingDistance);
-
-        // Find the Vector to our Target
-        Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
-
-        // Find Vector away from our Target by Negating Vector
-        Vector3 vectorAwayFromTarget = -vectorToTarget;
-
-        // Find Vector to Travel Down (the Flee Vector)
-        Vector3 wanderVector = vectorAwayFromTarget.normalized * percentOffWanderingDistance;
-
-        // Seek the Flee Vector Point away from our Position
-        Seek(pawn.transform.position + wanderVector);
-
-        // Reset Timer
-        wanderCountdownTime = Time.time + wanderCountdownSeconds;
-
-    }
-
 }

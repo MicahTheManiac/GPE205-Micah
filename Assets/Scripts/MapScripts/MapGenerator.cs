@@ -45,8 +45,8 @@ public class MapGenerator : MonoBehaviour
     // Generate the Map
     public void GenerateMap()
     {
-        // Clear out the Grid - "Row" = X, "Column" = Z
-        grid = new Room[rows, cols];
+        // Clear out the Grid - "Column" = X, "Row" = Z
+        grid = new Room[cols, rows];
 
         // For each Grid Row
         for (int cr = 0; cr < rows; cr++)

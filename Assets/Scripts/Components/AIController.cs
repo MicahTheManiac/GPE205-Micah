@@ -15,12 +15,16 @@ public class AIController : Controller
     public float fleeDistance;
     public float hearingDistance;
     public float fieldOfView;
+    public float lineOfSightAngle;
 
     // Waypoints
     public Transform[] waypoints;
     public float waypointStopDistance;
     private int currentWaypoint = 0;
 
+    public float wanderCountdownSeconds;
+
+    protected float wanderCountdownTime;
     private float lastStateChangeTime;
 
     // Is Distance Less Than Bool
@@ -406,6 +410,12 @@ public class AIController : Controller
         Patrol();
     }
 
+    // Do Wander State
+    public void DoWanderState()
+    {
+        Wander();
+    }
+
 
     // Patrol Function
     protected void Patrol()
@@ -467,6 +477,42 @@ public class AIController : Controller
 
         // Seek the Flee Vector Point away from our Position
         Seek(pawn.transform.position + fleeVector);
+    }
+
+    // Wander Function
+    public void Wander()
+    {
+        // Get Target Distance
+        float targetDistance = Vector3.Distance(target.transform.position, pawn.transform.position);
+
+        // Make a "Random" Position Based on that
+        float percentOffWanderingDistance = targetDistance / ((fleeDistance * detectionRadius) / lowHealthThreshold + 5);
+        float flippedPercentOffWanderingDistance = 1 - percentOffWanderingDistance;
+
+        percentOffWanderingDistance = Mathf.Clamp01(percentOffWanderingDistance * flippedPercentOffWanderingDistance);
+
+        // Find the Vector to our Target
+        Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
+
+        // Find Vector away from our Target by Negating Vector
+        Vector3 vectorAwayFromTarget = -vectorToTarget;
+
+        // Find Vector to Travel Down (the Flee Vector)
+        Vector3 wanderVector = vectorAwayFromTarget.normalized * percentOffWanderingDistance;
+
+        // Seek the Flee Vector Point away from our Position
+        Seek(pawn.transform.position + wanderVector);
+
+        // Count Down to Return to Idle
+        if (Time.time >= wanderCountdownTime)
+        {
+            // Reset Timer
+            wanderCountdownTime = Time.time + wanderCountdownSeconds;
+
+            // Change State
+            ChangeState(AIState.Idle);
+        }
+
     }
 
     // Seek Function -- Rotate and Move

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpeedPickup : MonoBehaviour
 {
-    public HealthPowerup powerup;
+    public SpeedPowerup powerup;
 
     public void OnTriggerEnter(Collider other)
     {
