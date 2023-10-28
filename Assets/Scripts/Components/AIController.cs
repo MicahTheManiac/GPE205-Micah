@@ -15,17 +15,76 @@ public class AIController : Controller
     public float fleeDistance;
     public float hearingDistance;
     public float fieldOfView;
-    public float lineOfSightAngle;
+    public float lineOfSightAngle = 7.5f;
 
     // Waypoints
     public Transform[] waypoints;
     public float waypointStopDistance;
     private int currentWaypoint = 0;
 
+    // Raycast Layer to Hit
+    public LayerMask layerToHit;
+
+    // Wander for Dumb AI
     public float wanderCountdownSeconds;
+
+    Ray ray;
 
     protected float wanderCountdownTime;
     private float lastStateChangeTime;
+
+    // Start is called before the first frame update
+    public override void Start()
+    {
+        // Check for Pawn
+        CheckForPawn();
+
+        // If we have a GameManager
+        if (GameManager.instance != null)
+        {
+            // And it tracks the Players
+            if (GameManager.instance.enemies != null)
+            {
+                // Register with GameManager
+                GameManager.instance.enemies.Add(this);
+            }
+        }
+
+        // Set Ray
+        ray = new Ray(transform.position, transform.forward);
+
+        // Set Beginning State
+        ChangeState(AIState.Idle);
+
+
+        // Run Parent Start
+        base.Start();
+    }
+
+    // Update is called once per frame
+    public override void Update()
+    {
+        // Check for Pawn
+        CheckForPawn();
+
+        // Check for Target
+        if (!IsHasTarget())
+        {
+            TargetNearestPlayer();
+        }
+
+        // Make AI Decisions -- Should be Reserved for Personalitites
+        // MakeDecisions();
+
+        // Run Parent Update
+        base.Update();
+    }
+
+    // Override ProcessInputs
+    public override void ProcessInputs()
+    {
+        
+    }
 
     // Is Distance Less Than Bool
     protected bool IsDistanceLessThan(GameObject target, float distance)
@@ -100,7 +159,22 @@ public class AIController : Controller
         // If that Angle is Less Than our Field of View
         if (angleToTarget < fieldOfView)
         {
-            return true;
+            if (Physics.Raycast(ray, out RaycastHit hit, detectionRadius, layerToHit))
+            {
+                // My Logic is: If we are hitting an Object with the same name as Target, we are hitting our Target
+                if (hit.collider.name == target.name)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -131,55 +205,6 @@ public class AIController : Controller
         {
             return false;
         }
-    }
-
-    // Start is called before the first frame update
-    public override void Start()
-    {
-        // Check for Pawn
-        CheckForPawn();
-
-        // If we have a GameManager
-        if (GameManager.instance != null)
-        {
-            // And it tracks the Players
-            if (GameManager.instance.enemies != null)
-            {
-                // Register with GameManager
-                GameManager.instance.enemies.Add(this);
-            }
-        }
-
-        // Set Beginning State
-        ChangeState(AIState.Idle);
-
-        // Run Parent Start
-        base.Start();
-    }
-
-    // Update is called once per frame
-    public override void Update()
-    {
-        // Check for Pawn
-        CheckForPawn();
-
-        // Check for Target
-        if (!IsHasTarget())
-        {
-            TargetNearestPlayer();
-        }
-
-        // Make AI Decisions -- Should be Reserved for Personalitites
-        // MakeDecisions();
-
-        // Run Parent Update
-        base.Update();
-    }
-
-    // Override ProcessInputs
-    public override void ProcessInputs()
-    {
-        
     }
 
     // Check to See if Pawn is null or not.
@@ -286,13 +311,9 @@ public class AIController : Controller
                 DoIdleState();
 
                 // If Target is in Range
-                if (IsDistanceLessThan(target, detectionRadius))
+                if (CanSee(target))
                 {
-                    // And We See it
-                    if (CanSee(target))
-                    {
-                        ChangeState(AIState.Chase);
-                    }
+                    ChangeState(AIState.Chase);
                 }
                 break;
 
@@ -301,13 +322,9 @@ public class AIController : Controller
                 DoChaseState();
 
                 // If Target is out of Range
-                if (!IsDistanceLessThan(target, detectionRadius))
+                if (!CanSee(target))
                 {
-                    // And We can't See it
-                    if (!CanSee(target))
-                    {
-                        ChangeState(AIState.Idle);
-                    }
+                    ChangeState(AIState.Idle);
                 }
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
@@ -332,13 +349,9 @@ public class AIController : Controller
                 DoPatrolState();
 
                 // If Target is in Range
-                if (IsDistanceLessThan(target, detectionRadius))
+                if (CanSee(target))
                 {
-                    // And We See it
-                    if (CanSee(target))
-                    {
-                        ChangeState(AIState.Chase);
-                    }
+                    ChangeState(AIState.Chase);
                 }
                 break;
 
@@ -347,13 +360,9 @@ public class AIController : Controller
                 DoAttackState();
 
                 // If Target is out of Range
-                if (!IsDistanceLessThan(target, detectionRadius))
+                if (!CanSee(target))
                 {
-                    // And We can't See it
-                    if (!CanSee(target))
-                    {
-                        ChangeState(AIState.Idle);
-                    }
+                    ChangeState(AIState.Idle);
                 }
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())

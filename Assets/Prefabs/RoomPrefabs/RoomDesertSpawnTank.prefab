@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3229867990349321766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2339546770676911857}
+  - component: {fileID: 4341145916481846793}
+  m_Layer: 0
+  m_Name: TankSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2339546770676911857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229867990349321766}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1282795305515371502}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4341145916481846793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229867990349321766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97f93f9573503634b89f1295f9593766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToSpawn:
+  - {fileID: 4204382026809999720, guid: 9a388d58ad9ba424188de5e518785e93, type: 3}
+  - {fileID: 1506736174985712381, guid: 3b95074933818d449a9aa625ddbabb7f, type: 3}
+  - {fileID: 6538424019820996801, guid: 278f793a6cb41104b85e5ef5a5a7af63, type: 3}
+  - {fileID: 2701857351874339895, guid: b1c0c505aefc331479c798c32ed1b6a0, type: 3}
+  doRepeatSpawns: 0
+  spawnDelay: 20
+--- !u!1001 &560869807341150037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1586951067915018459, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_Name
+      value: RoomDesertSpawnTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2339546770676911857}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+--- !u!4 &1282795305515371502 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1586951067915506875, guid: 5a01009c50f9bf942874cec7fdd1feca, type: 3}
+  m_PrefabInstance: {fileID: 560869807341150037}
+  m_PrefabAsset: {fileID: 0}

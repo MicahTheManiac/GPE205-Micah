@@ -57,6 +57,9 @@ MonoBehaviour:
   lineOfSightAngle: 5
   waypoints: []
   waypointStopDistance: 5
+  layerToHit:
+    serializedVersion: 2
+    m_Bits: 1
   wanderCountdownSeconds: 0
 --- !u!1001 &8137032221945412439
 PrefabInstance:
