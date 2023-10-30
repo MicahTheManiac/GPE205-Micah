@@ -63,13 +63,9 @@ public class HeroicAIController : AIController
                 DoIdleState();
 
                 // If Target is in Range
-                if (IsDistanceLessThan(target, detectionRadius))
+                if (CanSee(target))
                 {
-                    // And We See it
-                    if (CanSee(target))
-                    {
-                        ChangeState(AIState.Chase);
-                    }
+                    ChangeState(AIState.Chase);
                 }
                 break;
 
@@ -78,13 +74,9 @@ public class HeroicAIController : AIController
                 DoChaseState();
 
                 // If Target is out of Range
-                if (!IsDistanceLessThan(target, detectionRadius))
+                if (!CanSee(target))
                 {
-                    // And We can't See it
-                    if (!CanSee(target))
-                    {
-                        ChangeState(AIState.Idle);
-                    }
+                    ChangeState(AIState.Idle);
                 }
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
@@ -109,13 +101,9 @@ public class HeroicAIController : AIController
                 DoPatrolState();
 
                 // If Target is in Range
-                if (IsDistanceLessThan(target, detectionRadius))
+                if (CanSee(target))
                 {
-                    // And We See it
-                    if (CanSee(target))
-                    {
-                        ChangeState(AIState.Chase);
-                    }
+                    ChangeState(AIState.Chase);
                 }
                 break;
 
@@ -124,13 +112,9 @@ public class HeroicAIController : AIController
                 DoAttackState();
 
                 // If Target is out of Range
-                if (!IsDistanceLessThan(target, detectionRadius))
+                if (!CanSee(target))
                 {
-                    // And We can't See it
-                    if (!CanSee(target))
-                    {
-                        ChangeState(AIState.Idle);
-                    }
+                    ChangeState(AIState.Chase);
                 }
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
