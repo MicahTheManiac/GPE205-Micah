@@ -592,6 +592,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GenericTankAI
       objectReference: {fileID: 0}
+    - target: {fileID: 7677367429038184816, guid: 278f793a6cb41104b85e5ef5a5a7af63, type: 3}
+      propertyPath: layerToHit.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

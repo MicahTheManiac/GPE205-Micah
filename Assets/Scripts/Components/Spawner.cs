@@ -30,7 +30,7 @@ public class Spawner : MonoBehaviour
                 // And if it is time to Spawn a Pickup
                 if (Time.time > nextSpawnTime)
                 {
-                    // Spawn the Pickup
+                    // Spawn the Object
                     Spawn(transform.position);
                 }
             }

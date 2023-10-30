@@ -71,12 +71,12 @@ public class MapGenerator : MonoBehaviour
                 // Get the Room Object
                 Room tempRoom = tempRoomObj.GetComponent<Room>();
 
-                // If we are on the --- open North Door
+                // If we are on the Bottom Row open North Door
                 if (cr == 0)
                 {
                     tempRoom.doorNorth.SetActive(false);
                 }
-                // If we are on the --- open South Door
+                // If we are on the Top Row open South Door
                 else if (cr == rows - 1)
                 {
                     tempRoom.doorSouth.SetActive(false);
