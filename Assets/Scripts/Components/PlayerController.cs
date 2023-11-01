@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class PlayerController : Controller
@@ -11,6 +12,13 @@ public class PlayerController : Controller
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode shootKey;
+
+    // Hold our Score & Lives
+    public int score = 0;
+    public int lives = 3;
+
+    // UI
+    public Text scoreText;
 
     // Start is called before the first frame update
     public override void Start()
@@ -25,6 +33,10 @@ public class PlayerController : Controller
                 GameManager.instance.players.Add(this);
             }
         }
+
+        // Set Score Text
+        scoreText.text = ("Score: " + score);
+
         // Run Parent Start
         base.Start();
     }
@@ -76,6 +88,16 @@ public class PlayerController : Controller
         {
             pawn.Shoot();
         }
+    }
+
+    // Add to Score
+    public void AddToScore(int amount)
+    {
+        score += amount;
+
+        // Set Score Text
+        scoreText.text = ("Score: " + score);
+        Debug.Log("Score is: " + score + "\n Increased by: " + amount);
     }
 
     // Run Destory Code

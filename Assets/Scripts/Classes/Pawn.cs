@@ -8,6 +8,7 @@ public abstract class Pawn : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
     public Mover mover;
+    public Controller controller;
 
     // Shooting Vars.
     public float shotsPerSecond = 2.0f;

@@ -188,6 +188,12 @@ MonoBehaviour:
   playerSpawnTransform: {fileID: 217316989}
   players: []
   enemies: []
+  TitleScreenStateObject: {fileID: 0}
+  MainMenuStateObject: {fileID: 0}
+  OptionsScreenStateObject: {fileID: 0}
+  CreditsScreenStateObject: {fileID: 0}
+  GameplayStateObject: {fileID: 0}
+  GameOverScreenStateObject: {fileID: 0}
 --- !u!4 &606688647
 Transform:
   m_ObjectHideFlags: 0
@@ -290,7 +296,7 @@ Transform:
   m_GameObject: {fileID: 747204513}
   serializedVersion: 2
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
-  m_LocalPosition: {x: 0, y: 9.77, z: -47.46}
+  m_LocalPosition: {x: 0, y: 10, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

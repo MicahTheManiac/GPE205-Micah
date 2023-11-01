@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Health : MonoBehaviour
     public float currentHealth;
     public float maxHealth;
     public bool allowOverhealing = false;
+
+    // Indicator
+    public Image image;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +44,22 @@ public class Health : MonoBehaviour
             Die(source);
             Debug.Log(gameObject.name + ": I should be dead!");
         }
+
+        // Update UI
+        CalculateImageFill();
     }
 
     // Die
     public void Die(Pawn source)
     {
+        // Add to Killer's Score
+        PlayerController sourceController = source.controller.GetComponent<PlayerController>();
+        if (sourceController != null)
+        {
+            sourceController.AddToScore(100);
+        }
+
+        // Destroy this Object
         Destroy(gameObject);
     }
 
@@ -60,5 +75,20 @@ public class Health : MonoBehaviour
         {
             currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         }
+
+        // Update UI
+        CalculateImageFill();
+    }
+
+    // Calculate Fill Percentage
+    private void CalculateImageFill()
+    {
+        // Perform Calculation and Clamp
+        float percentHealth = currentHealth / maxHealth;
+        percentHealth = Mathf.Clamp(percentHealth, 0, 1);
+
+        // Set Fill
+        image.fillAmount = percentHealth;
+
     }
 }

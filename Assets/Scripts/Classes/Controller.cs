@@ -11,7 +11,8 @@ public abstract class Controller : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        // Set our Pawn's Controller to Me
+        pawn.controller = this;
     }
 
     // Update is called once per frame
