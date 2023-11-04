@@ -12,6 +12,7 @@ public class MapGenerator : MonoBehaviour
     public float roomHeight = 50.0f;
     public int mapSeed;
     public bool isMapOfTheDay = true;
+    public bool isRandomMap = false;
     
     private Room[,] grid;
 
@@ -22,6 +23,13 @@ public class MapGenerator : MonoBehaviour
         if (isMapOfTheDay)
         {
             mapSeed = DateToInt(DateTime.Now.Date);
+            isRandomMap = false;
+        }
+
+        if (isRandomMap)
+        {
+            mapSeed = DateToInt(DateTime.Now);
+            isMapOfTheDay = false;
         }
 
         // Set our Seed

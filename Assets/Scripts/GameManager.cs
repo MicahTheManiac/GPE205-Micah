@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SpawnPlayer();
-        //ActivateTitleScreen();
+        ActivateTitleScreen();
     }
 
     // Spawn Player
