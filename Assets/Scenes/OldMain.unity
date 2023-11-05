@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 503572456}
   - component: {fileID: 503572455}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -450,7 +450,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503572453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -458,8 +458,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -425, y: 275}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &503572455
 MonoBehaviour:
@@ -514,8 +514,8 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_fontStyle: 33
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -589,7 +589,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerControllerPrefab: {fileID: 3808522824559462222, guid: 01fad82ad04206a4997718c959984e08, type: 3}
   tankPawnPrefab: {fileID: 3656025999714921868, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
-  playerSpawnTransform: {fileID: 131890834}
+  playerSpawnTransforms:
+  - {fileID: 131890834}
+  scoreTextPassthrough: {fileID: 503572453}
   players: []
   enemies: []
   TitleScreenStateObject: {fileID: 0}
@@ -903,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  searchForPlayerIndex: 0
   offset: {x: 0, y: 20, z: -15}
 --- !u!1 &1082814706
 GameObject:

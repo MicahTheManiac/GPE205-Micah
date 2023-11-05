@@ -50,11 +50,11 @@ MonoBehaviour:
   target: {fileID: 0}
   doLooping: 1
   lowHealthThreshold: 15
-  detectionRadius: 20
+  visionLength: 30
   fleeDistance: 25
   hearingDistance: 20
   fieldOfView: 45
-  lineOfSightAngle: 5
+  lineOfSightAngle: 10
   waypoints: []
   waypointStopDistance: 5
   layerToHit:
@@ -96,6 +96,10 @@ PrefabInstance:
     - target: {fileID: 5011842499961114639, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6239471624849804501, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
+      propertyPath: maxHealth
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6249042955232778794, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
       propertyPath: m_Layer

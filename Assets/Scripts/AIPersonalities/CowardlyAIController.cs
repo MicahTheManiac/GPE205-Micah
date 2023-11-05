@@ -30,7 +30,7 @@ public class CowardlyAIController : AIController
                 DoIdleState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Flee);
                 }
@@ -41,7 +41,7 @@ public class CowardlyAIController : AIController
                 DoChaseState();
 
                 // If Target is out of Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }
@@ -68,7 +68,7 @@ public class CowardlyAIController : AIController
                 DoPatrolState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Flee);
                 }
@@ -79,7 +79,7 @@ public class CowardlyAIController : AIController
                 DoAttackState();
 
                 // If Target is out of Range
-                if (!CanSee(target))
+                if (!CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }

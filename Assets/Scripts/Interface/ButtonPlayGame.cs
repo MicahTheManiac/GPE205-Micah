@@ -12,6 +12,14 @@ public class ButtonPlayGame : MonoBehaviour
         }
     }
 
+    public void ChangeToGameplay()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.ActivateGameplay();
+        }
+    }
+
     public void QuitGame()
     {
         // Quit a Built App

@@ -11,11 +11,11 @@ public class AIController : Controller
     public float lowHealthThreshold = 15.0f;
 
     // Distance Vars.
-    public float detectionRadius = 20.0f;
+    public float visionLength = 20.0f;
     public float fleeDistance;
     public float hearingDistance;
     public float fieldOfView;
-    public float lineOfSightAngle = 7.5f;
+    public float lineOfSightAngle = 10.0f;
 
     // Waypoints
     public Transform[] waypoints;
@@ -148,7 +148,7 @@ public class AIController : Controller
     }
 
     // Check to see if We can See
-    protected bool CanSee(GameObject target)
+    protected bool CanSee(GameObject target, float angle)
     {
         // Find the Vector from Agent (Us) to the Target
         Vector3 agentToTargetVector = target.transform.position - pawn.transform.position;
@@ -157,9 +157,9 @@ public class AIController : Controller
         float angleToTarget = Vector3.Angle(agentToTargetVector, pawn.transform.forward);
 
         // If that Angle is Less Than our Field of View
-        if (angleToTarget < fieldOfView)
+        if (angleToTarget < angle)
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, detectionRadius, layerToHit))
+            if (Physics.Raycast(ray, out RaycastHit hit, visionLength, layerToHit))
             {
                 // My Logic is: If we are hitting an Object with the same name as Target, we are hitting our Target
                 if (hit.collider.name == target.name)
@@ -311,9 +311,15 @@ public class AIController : Controller
                 DoIdleState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Chase);
+                }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
                 }
                 break;
 
@@ -322,10 +328,17 @@ public class AIController : Controller
                 DoChaseState();
 
                 // If Target is out of Range
-                if (!CanSee(target))
+                if (!CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
+                }
+
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
                 {
@@ -349,9 +362,15 @@ public class AIController : Controller
                 DoPatrolState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Chase);
+                }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
                 }
                 break;
 
@@ -359,11 +378,18 @@ public class AIController : Controller
                 // Do Attack State
                 DoAttackState();
 
+                // If Target is out of LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Chase);
+                }
+
                 // If Target is out of Range
-                if (!CanSee(target))
+                if (!CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }
+
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
                 {
@@ -495,7 +521,7 @@ public class AIController : Controller
         float targetDistance = Vector3.Distance(target.transform.position, pawn.transform.position);
 
         // Make a "Random" Position Based on that
-        float percentOffWanderingDistance = targetDistance / ((fleeDistance * detectionRadius) / lowHealthThreshold + 5);
+        float percentOffWanderingDistance = targetDistance / ((fleeDistance * visionLength) / lowHealthThreshold + 5);
         float flippedPercentOffWanderingDistance = 1 - percentOffWanderingDistance;
 
         percentOffWanderingDistance = Mathf.Clamp01(percentOffWanderingDistance * flippedPercentOffWanderingDistance);

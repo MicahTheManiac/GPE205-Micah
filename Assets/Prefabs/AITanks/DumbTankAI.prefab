@@ -54,7 +54,7 @@ MonoBehaviour:
   fleeDistance: 25
   hearingDistance: 20
   fieldOfView: 45
-  lineOfSightAngle: 0
+  lineOfSightAngle: 7
   waypoints: []
   waypointStopDistance: 5
   layerToHit:
@@ -99,7 +99,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239471624849804501, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
       propertyPath: maxHealth
-      value: 75
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6249042955232778794, guid: 22d9117d92828f44faa48bbabf1b392b, type: 3}
       propertyPath: m_Layer

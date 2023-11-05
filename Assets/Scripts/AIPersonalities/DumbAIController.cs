@@ -30,9 +30,15 @@ public class DumbAIController : AIController
                 DoIdleState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Chase);
+                }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
                 }
 
                 // If it is time to Wander
@@ -52,10 +58,17 @@ public class DumbAIController : AIController
                 DoChaseState();
 
                 // If Target is out of Range
-                if (!CanSee(target))
+                if (!CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
+                }
+
                 // If We are Below Health Threshold
                 if (IsHealthBelowThreshold())
                 {
@@ -79,9 +92,15 @@ public class DumbAIController : AIController
                 DoPatrolState();
 
                 // If Target is in Range
-                if (CanSee(target))
+                if (CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Chase);
+                }
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
+                {
+                    ChangeState(AIState.Attack);
                 }
                 break;
 
@@ -90,14 +109,15 @@ public class DumbAIController : AIController
                 DoAttackState();
 
                 // If Target is out of Range
-                if (!CanSee(target))
+                if (!CanSee(target, fieldOfView))
                 {
                     ChangeState(AIState.Idle);
                 }
-                // If We are Below Health Threshold
-                if (IsHealthBelowThreshold())
+
+                // If Target is in LoS
+                if (CanSee(target, lineOfSightAngle))
                 {
-                    ChangeState(AIState.Flee);
+                    ChangeState(AIState.Attack);
                 }
                 break;
 

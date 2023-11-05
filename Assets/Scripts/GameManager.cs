@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,9 +11,10 @@ public class GameManager : MonoBehaviour
     // Prefabs
     public GameObject playerControllerPrefab;
     public GameObject tankPawnPrefab;
-    public Transform playerSpawnTransform;
+    public List<Transform> playerSpawnTransforms;
+    public GameObject scoreTextPassthrough;
 
-    // List to hold out Players
+    // List to hold our Controllers
     public List<PlayerController> players;
     public List<AIController> enemies;
 
@@ -44,25 +47,27 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        SpawnPlayer();
         ActivateTitleScreen();
     }
 
     // Spawn Player
     public void SpawnPlayer()
     {
-        // Spawn Player Controller at (0, 0, 0)
-        GameObject newPlayerObject = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        for (int i = 0; i < playerSpawnTransforms.Count; i++)
+        {
+            // Spawn Player Controller at (0, 0, 0)
+            GameObject newPlayerObject = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
 
-        // Spawn the Pawn and Connect to Controller
-        GameObject newPawnObject = Instantiate(tankPawnPrefab, playerSpawnTransform.position, playerSpawnTransform.rotation) as GameObject;
+            // Spawn the Pawn and Connect to Controller
+            GameObject newPawnObject = Instantiate(tankPawnPrefab, playerSpawnTransforms[i].position, playerSpawnTransforms[i].rotation) as GameObject;
 
-        // Get Player Controller and Pawn Components
-        Controller newController = newPlayerObject.GetComponent<Controller>();
-        Pawn newPawn = newPawnObject.GetComponent<Pawn>();
+            // Get Player Controller and Pawn Components
+            Controller newController = newPlayerObject.GetComponent<Controller>();
+            Pawn newPawn = newPawnObject.GetComponent<Pawn>();
 
-        // Hook them up!
-        newController.pawn = newPawn;
+            // Hook them up!
+            newController.pawn = newPawn;
+        }
     }
 
     // Deactivate All States
@@ -129,6 +134,7 @@ public class GameManager : MonoBehaviour
 
         // Activate the Gameplay State
         GameplayStateObject.SetActive(true);
+        SpawnPlayer();
         Debug.Log("Game is in GAMEPLAY State");
     }
 

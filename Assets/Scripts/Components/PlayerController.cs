@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class PlayerController : Controller
@@ -18,7 +19,8 @@ public class PlayerController : Controller
     public int lives = 3;
 
     // UI
-    public Text scoreText;
+    public GameObject scoreText;
+    private TextMeshProUGUI uiScoreText;
 
     // Start is called before the first frame update
     public override void Start()
@@ -32,10 +34,14 @@ public class PlayerController : Controller
                 // Register with GameManager
                 GameManager.instance.players.Add(this);
             }
+
+            // Get Score Text Passthrough
+            scoreText = GameManager.instance.scoreTextPassthrough;
+            uiScoreText = scoreText.GetComponent<TextMeshProUGUI>();
         }
 
         // Set Score Text
-        scoreText.text = ("Score: " + score);
+        uiScoreText.text = ("Score: " + score);
 
         // Run Parent Start
         base.Start();
@@ -95,8 +101,8 @@ public class PlayerController : Controller
     {
         score += amount;
 
-        // Set Score Text
-        scoreText.text = ("Score: " + score);
+        // Update Score Text
+        uiScoreText.text = ("Score: " + score);
         Debug.Log("Score is: " + score + "\n Increased by: " + amount);
     }
 
