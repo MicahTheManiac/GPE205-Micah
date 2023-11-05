@@ -10,9 +10,13 @@ public class GameManager : MonoBehaviour
 
     // Prefabs
     public GameObject playerControllerPrefab;
+    public bool isMultiplayerMode = false;
+    public GameObject playerTwoControllerPrefab;
     public GameObject tankPawnPrefab;
+
+    // Lists
     public List<Transform> playerSpawnTransforms;
-    public GameObject scoreTextPassthrough;
+    public List<GameObject> scoreTextPassthrough;
 
     // List to hold our Controllers
     public List<PlayerController> players;
@@ -25,6 +29,10 @@ public class GameManager : MonoBehaviour
     public GameObject CreditsScreenStateObject;
     public GameObject GameplayStateObject;
     public GameObject GameOverScreenStateObject;
+
+    // Game Modes
+    public GameObject SingleplayerGameMode;
+    public GameObject MultiplayerGameMode;
 
     // Called before Start() can run
     private void Awake()
@@ -51,23 +59,20 @@ public class GameManager : MonoBehaviour
     }
 
     // Spawn Player
-    public void SpawnPlayer()
+    public void SpawnPlayer(GameObject controllerPrefab, Transform spawnPoint)
     {
-        for (int i = 0; i < playerSpawnTransforms.Count; i++)
-        {
-            // Spawn Player Controller at (0, 0, 0)
-            GameObject newPlayerObject = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        // Spawn Player Controller at (0, 0, 0)
+        GameObject newPlayerObject = Instantiate(controllerPrefab, Vector3.zero, Quaternion.identity) as GameObject;
 
-            // Spawn the Pawn and Connect to Controller
-            GameObject newPawnObject = Instantiate(tankPawnPrefab, playerSpawnTransforms[i].position, playerSpawnTransforms[i].rotation) as GameObject;
+        // Spawn the Pawn and Connect to Controller
+        GameObject newPawnObject = Instantiate(tankPawnPrefab, spawnPoint.position, spawnPoint.rotation) as GameObject;
 
-            // Get Player Controller and Pawn Components
-            Controller newController = newPlayerObject.GetComponent<Controller>();
-            Pawn newPawn = newPawnObject.GetComponent<Pawn>();
+        // Get Player Controller and Pawn Components
+        Controller newController = newPlayerObject.GetComponent<Controller>();
+        Pawn newPawn = newPawnObject.GetComponent<Pawn>();
 
-            // Hook them up!
-            newController.pawn = newPawn;
-        }
+        // Hook them up!
+        newController.pawn = newPawn;
     }
 
     // Deactivate All States
@@ -134,7 +139,19 @@ public class GameManager : MonoBehaviour
 
         // Activate the Gameplay State
         GameplayStateObject.SetActive(true);
-        SpawnPlayer();
+
+        // Check to see What Gamemode (SP or MP)
+        if (!isMultiplayerMode)
+        {
+            // Singleplayer
+            ActivateSingleplayerMode();
+        }
+        else
+        {
+            // Multiplayer
+            ActivateMultiplayerMode();
+        }
+        
         Debug.Log("Game is in GAMEPLAY State");
     }
 
@@ -147,5 +164,32 @@ public class GameManager : MonoBehaviour
         // Activate the Game Over Screen
         GameOverScreenStateObject.SetActive(true);
         Debug.Log("Game is in GAME OVER SCREEN State");
+    }
+
+    public void ActivateSingleplayerMode()
+    {
+        // Activate Singleplayer
+        SingleplayerGameMode.SetActive(true);
+
+        // Deactivate Multiplayer
+        MultiplayerGameMode.SetActive(false);
+
+        // Spawn our Player
+        SpawnPlayer(playerControllerPrefab, playerSpawnTransforms[0]);
+    }
+
+    public void ActivateMultiplayerMode()
+    {
+        // Deactivate Singleplayer
+        SingleplayerGameMode.SetActive(false);
+
+        // Activate Multiplayer
+        MultiplayerGameMode.SetActive(true);
+
+        // Spawn Player 1
+        SpawnPlayer(playerControllerPrefab, playerSpawnTransforms[0]);
+
+        // Spawn Player 2
+        SpawnPlayer(playerTwoControllerPrefab, playerSpawnTransforms[1]);
     }
 }

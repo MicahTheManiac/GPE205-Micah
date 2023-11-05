@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
 
 public class OptionsScreenUI : MonoBehaviour
 {
 
     public AudioMixer audioMixer;
+    public MapGenerator mapGenerator;
+
+    // Sound
     public Slider musicSlider;
     public Slider sfxSlider;
+
+    // Level
+    public TMP_InputField seedInput;
 
     // Start is called before the first frame update
     void Start()
@@ -63,4 +70,42 @@ public class OptionsScreenUI : MonoBehaviour
         // Set the Volume to newVolume Value
         audioMixer.SetFloat("VolumeSFX", newVolume);
     }
+
+    public void GeneratorSetIsMapOfTheDay(bool value)
+    {
+        if (mapGenerator != null)
+        {
+            mapGenerator.isMapOfTheDay = value;
+        }
+    }
+
+    public void GeneratorSetIsRandomMap(bool value)
+    {
+        if (mapGenerator != null)
+        {
+            mapGenerator.isRandomMap = value;
+        }
+    }
+
+    public void GeneratorSetToUseCustomSeed(bool value)
+    {
+        bool negateValue = !value;
+        if (negateValue == false)
+        {
+            if (mapGenerator != null)
+            {
+                mapGenerator.isMapOfTheDay = negateValue;
+                mapGenerator.isRandomMap = negateValue;
+            }
+        }
+    }
+
+    public void GeneratorSetMapSeedToCustom()
+    {
+        if (mapGenerator != null)
+        {
+            mapGenerator.mapSeed = int.Parse(seedInput.text);
+        }
+    }
+
 }

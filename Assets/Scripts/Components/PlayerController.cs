@@ -36,7 +36,7 @@ public class PlayerController : Controller
             }
 
             // Get Score Text Passthrough
-            scoreText = GameManager.instance.scoreTextPassthrough;
+            //scoreText = GameManager.instance.scoreTextPassthrough;
             uiScoreText = scoreText.GetComponent<TextMeshProUGUI>();
         }
 
