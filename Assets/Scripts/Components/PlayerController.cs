@@ -22,6 +22,8 @@ public class PlayerController : Controller
     public GameObject scoreText;
     private TextMeshProUGUI uiScoreText;
 
+    private bool isMissingPawn;
+
     // Start is called before the first frame update
     public override void Start()
     {
@@ -50,6 +52,9 @@ public class PlayerController : Controller
     // Update is called once per frame
     public override void Update()
     {
+        // Check for Pawn
+        CheckForPawn();
+
         // Process Keyboard Inputs
         ProcessInputs();
 
@@ -63,21 +68,11 @@ public class PlayerController : Controller
         if (Input.GetKey(moveForwardKey))
         {
             pawn.MoveForward();
-            pawn.MakeNoise(true);
-        }
-        else if (!Input.GetKey(moveForwardKey))
-        {
-            pawn.MakeNoise(false);
         }
 
         if (Input.GetKey(moveBackwardKey))
         {
             pawn.MoveBackward();
-            pawn.MakeNoise(true);
-        }
-        else if (!Input.GetKey(moveBackwardKey))
-        {
-            pawn.MakeNoise(false);
         }
 
         if (Input.GetKey(rotateClockwiseKey))
@@ -120,4 +115,20 @@ public class PlayerController : Controller
             }
         }
     }
+
+    public void CheckForPawn()
+    {
+        if (!isMissingPawn)
+        {
+            if (pawn == null)
+            {
+                isMissingPawn = true;
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.ActivateGameOverScreen();
+                }
+            }
+        }
+    }
+
 }

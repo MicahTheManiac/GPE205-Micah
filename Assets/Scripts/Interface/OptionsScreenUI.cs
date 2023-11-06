@@ -108,4 +108,12 @@ public class OptionsScreenUI : MonoBehaviour
         }
     }
 
+    public void GManagerToggleMultiplayer(bool value)
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.isMultiplayerMode = value;
+        }
+    }
+
 }

@@ -12,7 +12,10 @@ public class FollowPlayer : MonoBehaviour
     void Update()
     {
         TargetPlayer(searchForPlayerIndex);
-        transform.position = player.position + offset;
+        if (player != null)
+        {
+            transform.position = player.position + offset;
+        }
     }
 
     // Auto Set Target to Player One
@@ -28,7 +31,10 @@ public class FollowPlayer : MonoBehaviour
                 if (GameManager.instance.players.Count > 0)
                 {
                     // Then target the Tranform of the First Player Controller in the List
-                    player = GameManager.instance.players[index].pawn.transform;
+                    if (GameManager.instance.players[index].pawn.transform != null)
+                    {
+                        player = GameManager.instance.players[index].pawn.transform;
+                    }
                 }
             }
         }

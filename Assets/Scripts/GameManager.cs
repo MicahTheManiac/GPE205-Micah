@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
     public GameObject SingleplayerGameMode;
     public GameObject MultiplayerGameMode;
 
+    // Game Over Screens
+    public Canvas MultiplayerGameOverCanvasOne;
+    public Canvas MultiplayerGameOverCanvasTwo;
+
     // Called before Start() can run
     private void Awake()
     {
@@ -42,8 +46,9 @@ public class GameManager : MonoBehaviour
         {
             // This is the instance
             instance = this;
+            // -- -- SINCE OUR GAME IS IN ONE SCENE WE CAN IGNORE DON'T DESTROY ON LOAD -- -- (Causes Issues when Restarting from GameOver)
             // Don't destroy in new scene
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -158,12 +163,21 @@ public class GameManager : MonoBehaviour
     // Activate the Game Over Screen
     public void ActivateGameOverScreen()
     {
-        // Deactivate all States
-        DeactivateAllStates();
+        // See if we are in Singleplayer
+        if (!isMultiplayerMode)
+        {
+            // Deactivate all States
+            DeactivateAllStates();
 
-        // Activate the Game Over Screen
-        GameOverScreenStateObject.SetActive(true);
-        Debug.Log("Game is in GAME OVER SCREEN State");
+            // Activate the Game Over Screen
+            GameOverScreenStateObject.SetActive(true);
+
+            Debug.Log("Game is in GAME OVER SCREEN State");
+        }
+        else
+        {
+            
+        }
     }
 
     public void ActivateSingleplayerMode()

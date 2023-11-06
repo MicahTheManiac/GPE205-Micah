@@ -1,11 +1,14 @@
-GPE205 "World of Tanks: The UAT Division"
+GPE205 "UATanks" Project
 - Attributions -
 
-Tank Model:
+Tank Model from 'gishadev':
 https://gisha.itch.io/tank-model
 
-Tree Models:
+Tree Models from 'DevilsWork.Shop':
 https://devilsworkshop.itch.io/lowpoly-forest-pack
 
-Art Assets from Kenney (Includes UATank Model):
+Art Assets from 'Kenney' (Includes UATank Model):
 http://www.kenney.nl :: License: CC0 1.0 Universal (https://creativecommons.org/publicdomain/zero/1.0/) 
+
+Tank Sound Effects from 'Prunus Productions':
+https://prunusproductions.itch.io/tank-sounds-pack

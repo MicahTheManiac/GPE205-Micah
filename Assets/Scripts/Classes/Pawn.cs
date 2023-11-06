@@ -42,13 +42,4 @@ public abstract class Pawn : MonoBehaviour
 
     // Rotate Towards Function -- Will Mainly be used for AI
     public abstract void RotateTowards(Vector3 targetPosition);
-
-    // Make Noise
-    public void MakeNoise(bool ShouldMakeNoise)
-    {
-        if (gameObject.GetComponent<NoiseMaker>() != null)
-        {
-            gameObject.GetComponent<NoiseMaker>().makingNoise = ShouldMakeNoise;
-        }
-    }
 }
