@@ -1,4 +1,4 @@
-**Micah Thompson's Version of UATanks**
+# Micah Thompson's Version of UATanks
 
 GPE205: Gameplay Programming Concepts
 University of Advancing Technology
